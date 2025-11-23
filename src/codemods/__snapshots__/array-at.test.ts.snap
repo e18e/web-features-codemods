@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`array-at > should not change code without array length - 1 access 1`] = `
+"const firstItem = myArray[0];
+      const length = myArray.length;
+    "
+`;
+
+exports[`array-at > should replace array length - 1 with at(-1) 1`] = `
+"const lastItem = myArray.at(-1);
+      const anotherLastItem = anotherArray.at(-1);
+    "
+`;

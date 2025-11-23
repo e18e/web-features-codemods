@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`postcss-sign-functions > handles no usages 1`] = `
+"import otherPlugin from 'some-other-plugin';
+
+      postcss([
+        otherPlugin()
+      ]).process(source);
+    "
+`;
+
+exports[`postcss-sign-functions > handles require syntax 1`] = `
+"
+
+      postcss([
+        
+      ]).process(source);
+    "
+`;
+
+exports[`postcss-sign-functions > removes usages of postcss-sign-functions and its imports 1`] = `
+"
+
+      postcss([
+        
+      ]).process(source);
+    "
+`;
+
+exports[`postcss-sign-functions > removes usages with options 1`] = `
+"
+
+      postcss([
+        
+      ]).process(source);
+    "
+`;

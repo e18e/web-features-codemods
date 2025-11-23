@@ -1,0 +1,36 @@
+{
+  "name": "@e18e/web-features-codemods",
+  "version": "1.0.0",
+  "description": "A collection of codemods for web features",
+  "main": "lib/main.js",
+  "files": [
+    "lib",
+    "!lib/**/*.test.js"
+  ],
+  "scripts": {
+    "build": "tsgo",
+    "test": "vitest run",
+    "format": "prettier --write src",
+    "lint": "npm run lint:format",
+    "lint:format": "prettier --check src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e18e/web-features-codemods.git"
+  },
+  "author": "James Garbutt (https://github.com/43081j)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/e18e/web-features-codemods/issues"
+  },
+  "homepage": "https://github.com/e18e/web-features-codemods#readme",
+  "dependencies": {
+    "@ast-grep/napi": "^0.40.0"
+  },
+  "devDependencies": {
+    "@typescript/native-preview": "^7.0.0-dev.20251123.1",
+    "@vitest/coverage-v8": "^4.0.13",
+    "prettier": "^3.6.2",
+    "vitest": "^4.0.13"
+  }
+}
