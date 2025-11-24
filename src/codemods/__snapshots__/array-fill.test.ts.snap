@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`array-fill > should transform for loop array filling 1`] = `
+"const arr = new Array(5).fill(0);
+"
+`;
+
+exports[`array-fill > should transform for loop with push 1`] = `
+"const arr = Array(5).fill(0);
+"
+`;
+
+exports[`array-fill > should transform for loops with declaration list 1`] = `
+"const foo = 303, arr = new Array(5).fill(foo);
+"
+`;
+
+exports[`array-fill > should transform for loops with let variable 1`] = `
+"let arr = new Array(5).fill(1);
+"
+`;
+
+exports[`array-fill > should transform multiple matches 1`] = `
+"const arr1 = Array.from({length: 5}).fill(0);
+const arr2 = Array(3).fill('test');"
+`;
