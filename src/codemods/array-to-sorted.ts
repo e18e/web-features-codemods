@@ -1,9 +1,9 @@
-import {ts, type Edit} from '@ast-grep/napi';
+import {parse, Lang, type Edit} from '@ast-grep/napi';
 import type {Options} from '../shared.js';
 import {getNodesSourceText} from '../typescript-utils.js';
 
 export function apply(options: Options): string {
-  const ast = ts.parse(options.source);
+  const ast = parse(Lang.TypeScript, options.source);
   const root = ast.root();
 
   const nodes = root.findAll({

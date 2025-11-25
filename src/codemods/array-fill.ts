@@ -1,7 +1,7 @@
-import {ts, type Edit, type SgRoot} from '@ast-grep/napi';
+import {parse, Lang, type Edit, type SgNode} from '@ast-grep/napi';
 import type {Options} from '../shared.js';
 
-function transformArrayFrom(root: SgRoot): Edit[] {
+function transformArrayFrom(root: SgNode): Edit[] {
   const edits: Edit[] = [];
 
   const arrayFromNodes = root.findAll({
@@ -24,7 +24,7 @@ function transformArrayFrom(root: SgRoot): Edit[] {
   return edits;
 }
 
-function transformSpreadMap(root: SgRoot): Edit[] {
+function transformSpreadMap(root: SgNode): Edit[] {
   const edits: Edit[] = [];
 
   const spreadMapNodes = root.findAll({
@@ -45,7 +45,7 @@ function transformSpreadMap(root: SgRoot): Edit[] {
   return edits;
 }
 
-function transformArrayDeclarations(root: SgRoot): Edit[] {
+function transformArrayDeclarations(root: SgNode): Edit[] {
   const edits: Edit[] = [];
 
   const arrayDeclarations = root.findAll({
@@ -101,7 +101,7 @@ function transformArrayDeclarations(root: SgRoot): Edit[] {
   return edits;
 }
 
-function transformEmptyArrayDeclarations(root: SgRoot): Edit[] {
+function transformEmptyArrayDeclarations(root: SgNode): Edit[] {
   const edits: Edit[] = [];
 
   const emptyArrayDeclarations = root.findAll({
@@ -157,7 +157,7 @@ function transformEmptyArrayDeclarations(root: SgRoot): Edit[] {
 }
 
 export function apply(options: Options): string {
-  const ast = ts.parse(options.source);
+  const ast = parse(Lang.TypeScript, options.source);
   const root = ast.root();
 
   const edits: Edit[] = [
