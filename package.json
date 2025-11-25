@@ -6,7 +6,8 @@
   "main": "lib/main.js",
   "files": [
     "lib",
-    "!lib/**/*.test.js"
+    "!lib/**/*.test.js",
+    "!lib/**/*.test.d.ts"
   ],
   "scripts": {
     "build": "tsgo",
