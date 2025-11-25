@@ -1,0 +1,110 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`array-includes > should handle bitwise NOT operator for positive checks 1`] = `
+"if (arr.includes(item)) {
+        console.log('found');
+      }
+      const hasValue = items.includes(value);
+    "
+`;
+
+exports[`array-includes > should handle multiple patterns in one file 1`] = `
+"const hasItem = arr.includes(item);
+      const missingItem = !arr.includes(other);
+      if (list.includes(value)) {
+        doSomething();
+      }
+      if (!items.includes(x)) {
+        handleMissing();
+      }
+    "
+`;
+
+exports[`array-includes > should handle negated bitwise NOT operator for negative checks 1`] = `
+"if (!arr.includes(item)) {
+        console.log('not found');
+      }
+      const missingValue = !items.includes(value);
+    "
+`;
+
+exports[`array-includes > should handle reversed negative comparisons 1`] = `
+"if (!arr.includes(item)) {
+        console.log('not found');
+      }
+      if (!myArray.includes(value)) {
+        console.log('missing');
+      }
+    "
+`;
+
+exports[`array-includes > should handle reversed positive comparisons 1`] = `
+"if (arr.includes(item)) {
+        console.log('found');
+      }
+      if (myArray.includes(value)) {
+        console.log('exists');
+      }
+      if (items.includes(x)) {
+        console.log('present');
+      }
+    "
+`;
+
+exports[`array-includes > should not change code without indexOf checks 1`] = `
+"const index = arr.indexOf(item);
+      const found = arr.includes(item);
+      if (x === -1) {
+        console.log('negative one');
+      }
+    "
+`;
+
+exports[`array-includes > should replace indexOf != -1 with includes 1`] = `
+"if (arr.includes(item)) {
+        console.log('found');
+      }
+    "
+`;
+
+exports[`array-includes > should replace indexOf !== -1 with includes 1`] = `
+"if (arr.includes(item)) {
+        console.log('found');
+      }
+    "
+`;
+
+exports[`array-includes > should replace indexOf < 0 with !includes 1`] = `
+"if (!arr.includes(item)) {
+        console.log('not found');
+      }
+    "
+`;
+
+exports[`array-includes > should replace indexOf == -1 with !includes 1`] = `
+"if (!arr.includes(item)) {
+        console.log('not found');
+      }
+    "
+`;
+
+exports[`array-includes > should replace indexOf === -1 with !includes 1`] = `
+"if (!arr.includes(item)) {
+        console.log('not found');
+      }
+    "
+`;
+
+exports[`array-includes > should replace indexOf > -1 with includes 1`] = `
+"if (arr.includes(item)) {
+        console.log('found');
+      }
+    "
+`;
+
+exports[`array-includes > should replace indexOf >= 0 with includes 1`] = `
+"if (arr.includes(item)) {
+        console.log('found');
+      }
+    "
+`;
