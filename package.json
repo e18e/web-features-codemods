@@ -1,6 +1,6 @@
 {
   "name": "@e18e/web-features-codemods",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "type": "module",
   "description": "A collection of codemods for web features",
   "main": "lib/main.js",
