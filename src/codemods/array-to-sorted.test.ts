@@ -1,5 +1,7 @@
 import {describe, it, expect} from 'vitest';
-import {apply} from './array-to-sorted.js';
+import {codemod} from './array-to-sorted.js';
+
+const {apply} = codemod;
 
 describe('array-to-sorted', () => {
   it('should convert concat().sort() to toSorted()', () => {
@@ -42,5 +44,27 @@ describe('array-to-sorted', () => {
     const source = 'const notSorted = arr.map(x => x * 2);';
     const result = apply({source});
     expect(result).toBe(source);
+  });
+
+  describe('test', () => {
+    it('should detect slice().sort() pattern', () => {
+      const source = 'const sorted = arr.slice().sort();';
+      expect(codemod.test({source})).toBe(true);
+    });
+
+    it('should detect [...arr].sort() pattern', () => {
+      const source = 'const sorted = [...arr].sort();';
+      expect(codemod.test({source})).toBe(true);
+    });
+
+    it('should not detect direct sort() calls', () => {
+      const source = 'const sorted = arr.sort();';
+      expect(codemod.test({source})).toBe(false);
+    });
+
+    it('should not detect when there is no sort pattern', () => {
+      const source = 'const arr = [1, 2, 3];';
+      expect(codemod.test({source})).toBe(false);
+    });
   });
 });

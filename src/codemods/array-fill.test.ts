@@ -1,5 +1,7 @@
 import {describe, it, expect} from 'vitest';
-import {apply} from './array-fill.js';
+import {codemod} from './array-fill.js';
+
+const {apply} = codemod;
 
 describe('array-fill', () => {
   it('should transform Array.from({length: n}, () => value) to .fill()', () => {
@@ -116,5 +118,33 @@ for (let i = 0; i < 5; i++) { arr.push(0); }
 for (let i = 0; i < 5; i++) { arr.push(1); }`;
     const result = apply({source});
     expect(result).toBe(source);
+  });
+
+  describe('test', () => {
+    it('should detect Array.from with constant callback', () => {
+      const source = `const arr = Array.from({length: 5}, () => 0);`;
+      expect(codemod.test({source})).toBe(true);
+    });
+
+    it('should detect spread Array with map', () => {
+      const source = `const arr = [...Array(5)].map(() => 0);`;
+      expect(codemod.test({source})).toBe(true);
+    });
+
+    it('should detect for loop array filling', () => {
+      const source = `const arr = new Array(5);
+for (let i = 0; i < arr.length; i++) { arr[i] = 0; }`;
+      expect(codemod.test({source})).toBe(true);
+    });
+
+    it('should not detect regular array creation', () => {
+      const source = `const arr = [1, 2, 3];`;
+      expect(codemod.test({source})).toBe(false);
+    });
+
+    it('should not detect when there are no fill patterns', () => {
+      const source = `const arr = Array.from({length: 5}, (_, i) => i);`;
+      expect(codemod.test({source})).toBe(false);
+    });
   });
 });

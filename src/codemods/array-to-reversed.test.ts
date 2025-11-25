@@ -1,5 +1,7 @@
 import {describe, it, expect} from 'vitest';
-import {apply} from './array-to-reversed.js';
+import {codemod} from './array-to-reversed.js';
+
+const {apply} = codemod;
 
 describe('array-to-reversed', () => {
   it('replaces concat().reverse() with toReversed()', () => {
@@ -36,5 +38,27 @@ describe('array-to-reversed', () => {
     const source = 'const reversed = obj.arr.concat().reverse();';
     const result = apply({source});
     expect(result).toBe('const reversed = obj.arr.toReversed();');
+  });
+
+  describe('test', () => {
+    it('should detect slice().reverse() pattern', () => {
+      const source = 'const reversed = arr.slice().reverse();';
+      expect(codemod.test({source})).toBe(true);
+    });
+
+    it('should detect [...array].reverse() pattern', () => {
+      const source = 'const reversed = [...arr].reverse();';
+      expect(codemod.test({source})).toBe(true);
+    });
+
+    it('should not detect direct reverse() calls', () => {
+      const source = 'const reversed = arr.reverse();';
+      expect(codemod.test({source})).toBe(false);
+    });
+
+    it('should not detect when there is no reverse pattern', () => {
+      const source = 'const arr = [1, 2, 3];';
+      expect(codemod.test({source})).toBe(false);
+    });
   });
 });

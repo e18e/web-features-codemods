@@ -1,5 +1,7 @@
 import {describe, it, expect} from 'vitest';
-import {apply} from './array-includes.js';
+import {codemod} from './array-includes.js';
+
+const {apply} = codemod;
 
 describe('array-includes', () => {
   it('should replace indexOf !== -1 with includes', () => {
@@ -148,5 +150,41 @@ describe('array-includes', () => {
     `;
     const result = apply({source});
     expect(result).toMatchSnapshot();
+  });
+
+  describe('test', () => {
+    it('should detect indexOf comparison patterns', () => {
+      const source = `
+        if (arr.indexOf(item) !== -1) {
+          console.log('found');
+        }
+      `;
+      expect(codemod.test({source})).toBe(true);
+    });
+
+    it('should detect bitwise NOT patterns', () => {
+      const source = `
+        if (~arr.indexOf(item)) {
+          console.log('found');
+        }
+      `;
+      expect(codemod.test({source})).toBe(true);
+    });
+
+    it('should not detect when already using includes', () => {
+      const source = `
+        if (arr.includes(item)) {
+          console.log('found');
+        }
+      `;
+      expect(codemod.test({source})).toBe(false);
+    });
+
+    it('should not detect plain indexOf calls', () => {
+      const source = `
+        const index = arr.indexOf(item);
+      `;
+      expect(codemod.test({source})).toBe(false);
+    });
   });
 });

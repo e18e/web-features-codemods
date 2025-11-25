@@ -25,9 +25,10 @@ describe('main', () => {
 
     for (const codemod of expectedCodemods) {
       expect(codemods).toHaveProperty(codemod);
-      expect(typeof codemods[codemod as keyof typeof codemods]).toBe(
-        'function'
-      );
+      const codemodObj = codemods[codemod as keyof typeof codemods];
+      expect(typeof codemodObj).toBe('object');
+      expect(typeof codemodObj.test).toBe('function');
+      expect(typeof codemodObj.apply).toBe('function');
     }
   });
 });

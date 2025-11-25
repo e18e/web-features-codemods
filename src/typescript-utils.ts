@@ -1,4 +1,4 @@
-import type {Edit, SgNode, Rule} from '@ast-grep/napi';
+import type {Edit, SgNode, Rule, NapiConfig} from '@ast-grep/napi';
 
 export function getNodesSourceText(source: string, nodes: SgNode[]): string {
   if (nodes.length === 0) {
@@ -14,14 +14,11 @@ export function getNodesSourceText(source: string, nodes: SgNode[]): string {
   return source.substring(start.index, end.index);
 }
 
-export function removeDefaultImportedSymbol(
-  importPath: string,
-  root: SgNode,
-  edits: Edit[],
-  usageRule?: Rule
-): void {
+export function createDefaultImportedSymbolRule(
+  importPath: string
+): NapiConfig {
   const importPathString = JSON.stringify(importPath);
-  const imports = root.findAll({
+  return {
     rule: {
       any: [
         {
@@ -38,7 +35,16 @@ export function removeDefaultImportedSymbol(
         }
       ]
     }
-  });
+  };
+}
+
+export function removeDefaultImportedSymbol(
+  importPath: string,
+  root: SgNode,
+  edits: Edit[],
+  usageRule?: Rule
+): void {
+  const imports = root.findAll(createDefaultImportedSymbolRule(importPath));
 
   for (const node of imports) {
     const name = node.getMatch('NAME');

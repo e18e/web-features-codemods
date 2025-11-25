@@ -1,14 +1,46 @@
-import {parse, Lang, type Edit, type SgNode} from '@ast-grep/napi';
-import type {Options} from '../shared.js';
+import {
+  parse,
+  Lang,
+  type Edit,
+  type SgNode,
+  type NapiConfig
+} from '@ast-grep/napi';
+import type {Options, CodeMod} from '../shared.js';
+
+const arrayFromRule: NapiConfig = {
+  rule: {
+    pattern: 'Array.from({length: $NUM}, () => $VALUE)'
+  }
+};
+
+const spreadMapRule: NapiConfig = {
+  rule: {
+    pattern: '[...Array($NUM)].map(() => $VALUE)'
+  }
+};
+
+const arrayDeclarationRule: NapiConfig = {
+  rule: {
+    pattern: {
+      context: 'const $NAME = new Array($NUM)',
+      selector: 'variable_declarator'
+    }
+  }
+};
+
+const emptyArrayDeclarationRule: NapiConfig = {
+  rule: {
+    pattern: {
+      context: 'const $NAME = []',
+      selector: 'variable_declarator'
+    }
+  }
+};
 
 function transformArrayFrom(root: SgNode): Edit[] {
   const edits: Edit[] = [];
 
-  const arrayFromNodes = root.findAll({
-    rule: {
-      pattern: 'Array.from({length: $NUM}, () => $VALUE)'
-    }
-  });
+  const arrayFromNodes = root.findAll(arrayFromRule);
 
   for (const node of arrayFromNodes) {
     const num = node.getMatch('NUM');
@@ -27,11 +59,7 @@ function transformArrayFrom(root: SgNode): Edit[] {
 function transformSpreadMap(root: SgNode): Edit[] {
   const edits: Edit[] = [];
 
-  const spreadMapNodes = root.findAll({
-    rule: {
-      pattern: '[...Array($NUM)].map(() => $VALUE)'
-    }
-  });
+  const spreadMapNodes = root.findAll(spreadMapRule);
 
   for (const node of spreadMapNodes) {
     const num = node.getMatch('NUM');
@@ -48,14 +76,7 @@ function transformSpreadMap(root: SgNode): Edit[] {
 function transformArrayDeclarations(root: SgNode): Edit[] {
   const edits: Edit[] = [];
 
-  const arrayDeclarations = root.findAll({
-    rule: {
-      pattern: {
-        context: 'const $NAME = new Array($NUM)',
-        selector: 'variable_declarator'
-      }
-    }
-  });
+  const arrayDeclarations = root.findAll(arrayDeclarationRule);
 
   for (const declNode of arrayDeclarations) {
     const name = declNode.getMatch('NAME');
@@ -104,14 +125,7 @@ function transformArrayDeclarations(root: SgNode): Edit[] {
 function transformEmptyArrayDeclarations(root: SgNode): Edit[] {
   const edits: Edit[] = [];
 
-  const emptyArrayDeclarations = root.findAll({
-    rule: {
-      pattern: {
-        context: 'const $NAME = []',
-        selector: 'variable_declarator'
-      }
-    }
-  });
+  const emptyArrayDeclarations = root.findAll(emptyArrayDeclarationRule);
 
   for (const declNode of emptyArrayDeclarations) {
     const name = declNode.getMatch('NAME');
@@ -156,16 +170,29 @@ function transformEmptyArrayDeclarations(root: SgNode): Edit[] {
   return edits;
 }
 
-export function apply(options: Options): string {
-  const ast = parse(Lang.TypeScript, options.source);
-  const root = ast.root();
+export const codemod: CodeMod = {
+  test(options: Options): boolean {
+    const ast = parse(Lang.TypeScript, options.source);
+    const root = ast.root();
 
-  const edits: Edit[] = [
-    ...transformArrayFrom(root),
-    ...transformSpreadMap(root),
-    ...transformArrayDeclarations(root),
-    ...transformEmptyArrayDeclarations(root)
-  ];
+    return (
+      root.has(arrayFromRule) ||
+      root.has(spreadMapRule) ||
+      root.has(arrayDeclarationRule) ||
+      root.has(emptyArrayDeclarationRule)
+    );
+  },
+  apply(options: Options): string {
+    const ast = parse(Lang.TypeScript, options.source);
+    const root = ast.root();
 
-  return root.commitEdits(edits);
-}
+    const edits: Edit[] = [
+      ...transformArrayFrom(root),
+      ...transformSpreadMap(root),
+      ...transformArrayDeclarations(root),
+      ...transformEmptyArrayDeclarations(root)
+    ];
+
+    return root.commitEdits(edits);
+  }
+};

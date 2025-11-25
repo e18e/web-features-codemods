@@ -1,15 +1,28 @@
 import {parse, Lang, type Edit} from '@ast-grep/napi';
-import type {Options} from '../shared.js';
-import {removeDefaultImportedSymbol} from '../typescript-utils.js';
+import type {Options, CodeMod} from '../shared.js';
+import {
+  removeDefaultImportedSymbol,
+  createDefaultImportedSymbolRule
+} from '../typescript-utils.js';
 
-export function apply(options: Options): string {
-  const ast = parse(Lang.TypeScript, options.source);
-  const root = ast.root();
-  const edits: Edit[] = [];
+const IMPORT_PATH = '@csstools/postcss-sign-functions';
 
-  removeDefaultImportedSymbol('@csstools/postcss-sign-functions', root, edits, {
-    pattern: '$NAME($$$_)'
-  });
+export const codemod: CodeMod = {
+  test(options: Options): boolean {
+    const ast = parse(Lang.TypeScript, options.source);
+    const root = ast.root();
 
-  return root.commitEdits(edits);
-}
+    return root.has(createDefaultImportedSymbolRule(IMPORT_PATH));
+  },
+  apply(options: Options): string {
+    const ast = parse(Lang.TypeScript, options.source);
+    const root = ast.root();
+    const edits: Edit[] = [];
+
+    removeDefaultImportedSymbol(IMPORT_PATH, root, edits, {
+      pattern: '$NAME($$$_)'
+    });
+
+    return root.commitEdits(edits);
+  }
+};
