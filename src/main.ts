@@ -4,6 +4,7 @@ export {codemod as arrayIncludes} from './codemods/array-includes.js';
 export {codemod as arrayToReversed} from './codemods/array-to-reversed.js';
 export {codemod as arrayToSorted} from './codemods/array-to-sorted.js';
 export {codemod as arrayToSpliced} from './codemods/array-to-spliced.js';
+export {codemod as exponentiation} from './codemods/exponentiation.js';
 export {codemod as nullishCoalescing} from './codemods/nullish-coalescing.js';
 export {codemod as postcssSignFunctions} from './codemods/postcss-sign-functions.js';
 export {codemod as stringIncludes} from './codemods/string-includes.js';
