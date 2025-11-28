@@ -1,0 +1,45 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`spread-syntax > Object.assign() > should not change Object.assign with non-empty first argument 1`] = `
+"const mutated = Object.assign(target, source);
+      "
+`;
+
+exports[`spread-syntax > Object.assign() > should replace Object.assign({}, ...) with spread syntax 1`] = `
+"const merged = {...obj1, ...obj2};
+        const triple = {...a, ...b, ...c};
+      "
+`;
+
+exports[`spread-syntax > array.concat() > should not change code without concat 1`] = `
+"const arr = [1, 2, 3];
+        const pushed = arr.push(4);
+      "
+`;
+
+exports[`spread-syntax > array.concat() > should replace concat with array literal 1`] = `
+"const result = [...arr, ...[1, 2, 3]];
+      "
+`;
+
+exports[`spread-syntax > array.concat() > should replace concat with spread syntax 1`] = `
+"const combined = [...arr, ...other];
+        const multi = [...arr, ...a, ...b, ...c];
+      "
+`;
+
+exports[`spread-syntax > function.apply() > should not change apply with context object 1`] = `
+"const result = fn.apply(context, args);
+      "
+`;
+
+exports[`spread-syntax > function.apply() > should replace apply(null, args) with spread syntax 1`] = `
+"const result = fn(...args);
+        const max = Math.max(...numbers);
+      "
+`;
+
+exports[`spread-syntax > function.apply() > should replace apply(undefined, args) with spread syntax 1`] = `
+"const result = fn(...args);
+      "
+`;
