@@ -1,0 +1,27 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`exponentiation > should handle Math.pow in expressions 1`] = `
+"const result = (a + b) ** (c - d) * 2;
+      const value = 10 + (x) ** (y);
+    "
+`;
+
+exports[`exponentiation > should handle nested Math.pow calls 1`] = `
+"const result = ((2) ** (3)) ** (4);
+    "
+`;
+
+exports[`exponentiation > should not change code without Math.pow 1`] = `
+"
+      const result = x ** y;
+      const squared = 2 ** 3;
+      const value = Math.sqrt(4);
+    "
+`;
+
+exports[`exponentiation > should replace Math.pow with exponentiation operator 1`] = `
+"const result = (2) ** (3);
+      const squared = (x) ** (2);
+      const complex = (base) ** (exponent);
+    "
+`;
