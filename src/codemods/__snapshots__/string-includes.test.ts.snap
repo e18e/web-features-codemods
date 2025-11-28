@@ -1,0 +1,130 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`string-includes > should handle bitwise NOT operator for positive checks 1`] = `
+"if (str.includes('substring')) {
+        console.log('found');
+      }
+      const hasPattern = text.includes(pattern);
+    "
+`;
+
+exports[`string-includes > should handle method chaining 1`] = `
+"if (str.toLowerCase().includes('hello')) {
+        console.log('found');
+      }
+      if (!text.trim().includes(pattern)) {
+        console.log('not found');
+      }
+    "
+`;
+
+exports[`string-includes > should handle multiple patterns in one file 1`] = `
+"const hasWord = str.includes('word');
+      const missingWord = !str.includes('other');
+      if (text.includes(pattern)) {
+        doSomething();
+      }
+      if (!content.includes(search)) {
+        handleMissing();
+      }
+    "
+`;
+
+exports[`string-includes > should handle negated bitwise NOT operator for negative checks 1`] = `
+"if (!str.includes('substring')) {
+        console.log('not found');
+      }
+      const missingPattern = !text.includes(pattern);
+    "
+`;
+
+exports[`string-includes > should handle reversed negative comparisons 1`] = `
+"if (!str.includes('missing')) {
+        console.log('not found');
+      }
+      if (!content.includes(search)) {
+        console.log('absent');
+      }
+    "
+`;
+
+exports[`string-includes > should handle reversed positive comparisons 1`] = `
+"if (str.includes('test')) {
+        console.log('found');
+      }
+      if (content.includes(pattern)) {
+        console.log('exists');
+      }
+      if (text.includes(query)) {
+        console.log('present');
+      }
+    "
+`;
+
+exports[`string-includes > should not change code without indexOf checks 1`] = `
+"const index = str.indexOf('test');
+      const found = str.includes('test');
+      if (x === -1) {
+        console.log('negative one');
+      }
+    "
+`;
+
+exports[`string-includes > should not transform indexOf with position parameter 1`] = `
+"if (str.indexOf('test', 5) !== -1) {
+        console.log('found after position 5');
+      }
+      if (text.indexOf(pattern, startPos) === -1) {
+        console.log('not found from start position');
+      }
+    "
+`;
+
+exports[`string-includes > should replace indexOf != -1 with includes 1`] = `
+"if (str.includes('world')) {
+        console.log('found');
+      }
+    "
+`;
+
+exports[`string-includes > should replace indexOf !== -1 with includes 1`] = `
+"if (str.includes('hello')) {
+        console.log('found');
+      }
+    "
+`;
+
+exports[`string-includes > should replace indexOf < 0 with !includes 1`] = `
+"if (!text.includes(keyword)) {
+        console.log('not found');
+      }
+    "
+`;
+
+exports[`string-includes > should replace indexOf == -1 with !includes 1`] = `
+"if (!str.includes('absent')) {
+        console.log('not found');
+      }
+    "
+`;
+
+exports[`string-includes > should replace indexOf === -1 with !includes 1`] = `
+"if (!str.includes('missing')) {
+        console.log('not found');
+      }
+    "
+`;
+
+exports[`string-includes > should replace indexOf > -1 with includes 1`] = `
+"if (text.includes(searchTerm)) {
+        console.log('found');
+      }
+    "
+`;
+
+exports[`string-includes > should replace indexOf >= 0 with includes 1`] = `
+"if (message.includes('error')) {
+        console.log('found');
+      }
+    "
+`;
