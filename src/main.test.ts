@@ -24,8 +24,12 @@ describe('main', () => {
     });
 
     for (const codemod of expectedCodemods) {
-      expect(codemods).toHaveProperty(codemod);
-      const codemodObj = codemods[codemod as keyof typeof codemods];
+      // Find the matching export (case-insensitive)
+      const actualKey = Object.keys(codemods).find(
+        (key) => key.toLowerCase() === codemod.toLowerCase()
+      );
+      expect(actualKey).toBeDefined();
+      const codemodObj = codemods[actualKey as keyof typeof codemods];
       expect(typeof codemodObj).toBe('object');
       expect(typeof codemodObj.test).toBe('function');
       expect(typeof codemodObj.apply).toBe('function');

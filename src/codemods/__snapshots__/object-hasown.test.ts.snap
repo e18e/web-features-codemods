@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`object-hasown > should handle both patterns in the same code 1`] = `
+"const has1 = Object.hasOwn(obj, 'key');
+      const has2 = Object.hasOwn(obj, 'key');
+    "
+`;
+
+exports[`object-hasown > should not change code without hasOwnProperty usage 1`] = `
+"const has = Object.hasOwn(obj, 'key');
+      const value = obj.key;
+    "
+`;
+
+exports[`object-hasown > should replace Object.prototype.hasOwnProperty.call() with Object.hasOwn() 1`] = `
+"const has = Object.hasOwn(obj, 'key');
+      const hasAnother = Object.hasOwn(myObject, 'property');
+    "
+`;
+
+exports[`object-hasown > should replace obj.hasOwnProperty() with Object.hasOwn() 1`] = `
+"const has = Object.hasOwn(obj, 'key');
+      const hasAnother = Object.hasOwn(myObject, 'property');
+    "
+`;
