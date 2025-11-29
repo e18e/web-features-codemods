@@ -10,3 +10,4 @@ export {codemod as objectHasOwn} from './codemods/object-hasown.js';
 export {codemod as postcssSignFunctions} from './codemods/postcss-sign-functions.js';
 export {codemod as spreadSyntax} from './codemods/spread-syntax.js';
 export {codemod as stringIncludes} from './codemods/string-includes.js';
+export {codemod as urlCanParse} from './codemods/url-canparse.js';
