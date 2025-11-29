@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`url-canparse > should handle try-catch with only try body (no catch body) 1`] = `
+"function processUrl(u) {
+        if (URL.canParse(u)) {
+console.log('Valid URL');
+}
+      }
+    "
+`;
+
+exports[`url-canparse > should not change code without URL validation pattern 1`] = `
+"function normalFunction() {
+        const url = new URL('https://example.com');
+        return url.href;
+      }
+    "
+`;
+
+exports[`url-canparse > should replace try-catch boolean return pattern with URL.canParse 1`] = `
+"function isValidUrl(u) {
+        return URL.canParse(u)
+      }
+    "
+`;
+
+exports[`url-canparse > should replace try-catch with body to if-else with URL.canParse 1`] = `
+"function processUrl(u) {
+        if (URL.canParse(u)) {
+console.log('Valid URL');
+          doSomething(u);
+} else {
+console.error('Invalid URL');
+}
+      }
+    "
+`;
