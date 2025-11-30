@@ -21,7 +21,7 @@ npm install @e18e/web-features-codemods --save-dev
 | `arrayIncludes` | Convert `indexOf` checks to `includes()` | `array.indexOf(item) !== -1` → `array.includes(item)` |
 | `arrayToReversed` | Convert copy-and-reverse patterns to `toReversed()` | `array.slice().reverse()` → `array.toReversed()` |
 | `arrayToSorted` | Convert copy-and-sort patterns to `toSorted()` | `array.slice().sort()` → `array.toSorted()` |
-| `arrayToSpliced` | Convert copy-and-splice patterns to `toSpliced()` | `array.slice().splice(...)` → `array.toSpliced(...)` |
+| `arrayToSpliced` | Convert copy-and-splice patterns to `toSpliced()` | `const copy = arr.slice(); copy.splice(0, 1);` → `const copy = arr.toSpliced(0, 1);` |
 | `exponentiation` | Convert `Math.pow()` to exponentiation operator | `Math.pow(base, exp)` → `base ** exp` |
 | `nullishCoalescing` | Convert null/undefined checks to nullish coalescing | `value != null ? value : default` → `value ?? default` |
 | `objectHasOwn` | Convert `hasOwnProperty` to `Object.hasOwn()` | `obj.hasOwnProperty(prop)` → `Object.hasOwn(obj, prop)` |
