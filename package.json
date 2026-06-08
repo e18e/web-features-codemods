@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/e18e/web-features-codemods#readme",
   "dependencies": {
-    "@ast-grep/napi": "^0.40.5"
+    "@ast-grep/napi": "^0.43.0"
   },
   "devDependencies": {
     "@types/node": "^25.2.3",
