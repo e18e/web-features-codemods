@@ -25,14 +25,14 @@ describe('array-at', () => {
       const source = `
         const lastItem = myArray[myArray.length - 1];
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should not detect when there is no array length - 1 access', () => {
       const source = `
         const firstItem = myArray[0];
       `;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
   });
 });

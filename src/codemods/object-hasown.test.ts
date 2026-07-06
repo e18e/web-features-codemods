@@ -43,21 +43,21 @@ describe('object-hasown', () => {
       const source = `
         const has = obj.hasOwnProperty('key');
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect Object.prototype.hasOwnProperty.call()', () => {
       const source = `
         const has = Object.prototype.hasOwnProperty.call(obj, 'key');
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should not detect when there is no hasOwnProperty usage', () => {
       const source = `
         const has = Object.hasOwn(obj, 'key');
       `;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
   });
 });

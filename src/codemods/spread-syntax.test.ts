@@ -79,22 +79,22 @@ describe('spread-syntax', () => {
   describe('test', () => {
     it('should detect array.concat()', () => {
       const source = `const result = arr.concat(other);`;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect Object.assign({}, ...)', () => {
       const source = `const result = Object.assign({}, obj);`;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect function.apply(null, args)', () => {
       const source = `const result = fn.apply(null, args);`;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect function.apply(undefined, args)', () => {
       const source = `const result = fn.apply(undefined, args);`;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should not detect when no patterns match', () => {
@@ -102,7 +102,7 @@ describe('spread-syntax', () => {
         const arr = [1, 2, 3];
         const obj = {a: 1};
       `;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
   });
 });

@@ -123,28 +123,28 @@ for (let i = 0; i < 5; i++) { arr.push(1); }`;
   describe('test', () => {
     it('should detect Array.from with constant callback', () => {
       const source = `const arr = Array.from({length: 5}, () => 0);`;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect spread Array with map', () => {
       const source = `const arr = [...Array(5)].map(() => 0);`;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect for loop array filling', () => {
       const source = `const arr = new Array(5);
 for (let i = 0; i < arr.length; i++) { arr[i] = 0; }`;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should not detect regular array creation', () => {
       const source = `const arr = [1, 2, 3];`;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
 
     it('should not detect when there are no fill patterns', () => {
       const source = `const arr = Array.from({length: 5}, (_, i) => i);`;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
   });
 });

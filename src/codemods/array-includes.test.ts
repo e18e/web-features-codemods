@@ -159,7 +159,7 @@ describe('array-includes', () => {
           console.log('found');
         }
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect bitwise NOT patterns', () => {
@@ -168,7 +168,7 @@ describe('array-includes', () => {
           console.log('found');
         }
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should not detect when already using includes', () => {
@@ -177,14 +177,14 @@ describe('array-includes', () => {
           console.log('found');
         }
       `;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
 
     it('should not detect plain indexOf calls', () => {
       const source = `
         const index = arr.indexOf(item);
       `;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
   });
 });

@@ -1,4 +1,13 @@
 import type {Edit, SgNode, Rule, NapiConfig} from '@ast-grep/napi';
+import type {Range} from './shared.js';
+
+export function getRangeForNode(node: SgNode): Range {
+  const range = node.range();
+  return {
+    start: {line: range.start.line, column: range.start.column},
+    end: {line: range.end.line, column: range.end.column}
+  };
+}
 
 export function getNodesSourceText(source: string, nodes: SgNode[]): string {
   if (nodes.length === 0) {

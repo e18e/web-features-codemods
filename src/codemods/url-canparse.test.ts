@@ -68,7 +68,7 @@ describe('url-canparse', () => {
           return false;
         }
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect try-catch with body pattern', () => {
@@ -80,14 +80,14 @@ describe('url-canparse', () => {
           console.log('invalid');
         }
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should not detect when there is no URL validation pattern', () => {
       const source = `
         const url = new URL('https://example.com');
       `;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
   });
 });

@@ -1,5 +1,6 @@
 import {parse, Lang, type Edit, type NapiConfig} from '@ast-grep/napi';
-import type {Options, CodeMod} from '../shared.js';
+import type {Options, CodeMod, TestResult} from '../shared.js';
+import {getRangeForNode} from '../typescript-utils.js';
 
 const arrayToReversedRule: NapiConfig = {
   rule: {
@@ -21,11 +22,14 @@ const arrayToReversedRule: NapiConfig = {
 };
 
 export const codemod: CodeMod = {
-  test(options: Options): boolean {
+  test(options: Options): TestResult {
     const ast = parse(Lang.TypeScript, options.source);
     const root = ast.root();
 
-    return root.has(arrayToReversedRule);
+    const node = root.find(arrayToReversedRule);
+    return node
+      ? {hasMatch: true, range: getRangeForNode(node)}
+      : {hasMatch: false};
   },
   apply(options: Options): string {
     const ast = parse(Lang.TypeScript, options.source);
