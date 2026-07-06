@@ -57,27 +57,27 @@ describe('array-to-spliced', () => {
   describe('test', () => {
     it('should detect slice() followed by splice() pattern', () => {
       const source = `const copy = arr.slice();\ncopy.splice(0, 1);`;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect spread followed by splice() pattern', () => {
       const source = `const copy = [...arr];\ncopy.splice(0, 1);`;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should not detect direct splice() calls', () => {
       const source = `arr.splice(0, 1);`;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
 
     it('should not detect when variable names do not match', () => {
       const source = `const copy = arr.slice();\nother.splice(0, 1);`;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
 
     it('should not detect when there is no splice pattern', () => {
       const source = `const arr = [1, 2, 3];`;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
   });
 });

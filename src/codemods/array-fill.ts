@@ -5,7 +5,8 @@ import {
   type SgNode,
   type NapiConfig
 } from '@ast-grep/napi';
-import type {Options, CodeMod} from '../shared.js';
+import type {Options, CodeMod, TestResult} from '../shared.js';
+import {getRangeForNode} from '../typescript-utils.js';
 
 const arrayFromRule: NapiConfig = {
   rule: {
@@ -171,16 +172,18 @@ function transformEmptyArrayDeclarations(root: SgNode): Edit[] {
 }
 
 export const codemod: CodeMod = {
-  test(options: Options): boolean {
+  test(options: Options): TestResult {
     const ast = parse(Lang.TypeScript, options.source);
     const root = ast.root();
 
-    return (
-      root.has(arrayFromRule) ||
-      root.has(spreadMapRule) ||
-      root.has(arrayDeclarationRule) ||
-      root.has(emptyArrayDeclarationRule)
-    );
+    const node =
+      root.find(arrayFromRule) ??
+      root.find(spreadMapRule) ??
+      root.find(arrayDeclarationRule) ??
+      root.find(emptyArrayDeclarationRule);
+    return node
+      ? {hasMatch: true, range: getRangeForNode(node)}
+      : {hasMatch: false};
   },
   apply(options: Options): string {
     const ast = parse(Lang.TypeScript, options.source);

@@ -49,22 +49,22 @@ describe('array-to-sorted', () => {
   describe('test', () => {
     it('should detect slice().sort() pattern', () => {
       const source = 'const sorted = arr.slice().sort();';
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect [...arr].sort() pattern', () => {
       const source = 'const sorted = [...arr].sort();';
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should not detect direct sort() calls', () => {
       const source = 'const sorted = arr.sort();';
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
 
     it('should not detect when there is no sort pattern', () => {
       const source = 'const arr = [1, 2, 3];';
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
   });
 });

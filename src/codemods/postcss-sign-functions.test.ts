@@ -58,14 +58,14 @@ describe('postcss-sign-functions', () => {
         import signFunctions from '@csstools/postcss-sign-functions';
         postcss([signFunctions()]).process(source);
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect postcss-sign-functions require', () => {
       const source = `
         const signFunctions = require('@csstools/postcss-sign-functions');
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should not detect when postcss-sign-functions is not imported', () => {
@@ -73,12 +73,12 @@ describe('postcss-sign-functions', () => {
         import otherPlugin from 'some-other-plugin';
         postcss([otherPlugin()]).process(source);
       `;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
 
     it('should not detect in empty code', () => {
       const source = `const x = 1;`;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
   });
 });

@@ -43,22 +43,22 @@ describe('array-to-reversed', () => {
   describe('test', () => {
     it('should detect slice().reverse() pattern', () => {
       const source = 'const reversed = arr.slice().reverse();';
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect [...array].reverse() pattern', () => {
       const source = 'const reversed = [...arr].reverse();';
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should not detect direct reverse() calls', () => {
       const source = 'const reversed = arr.reverse();';
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
 
     it('should not detect when there is no reverse pattern', () => {
       const source = 'const arr = [1, 2, 3];';
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
   });
 });

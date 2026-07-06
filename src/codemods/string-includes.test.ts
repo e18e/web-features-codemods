@@ -185,7 +185,7 @@ describe('string-includes', () => {
           console.log('found');
         }
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect bitwise NOT patterns', () => {
@@ -194,7 +194,7 @@ describe('string-includes', () => {
           console.log('found');
         }
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should not detect when already using includes', () => {
@@ -203,14 +203,14 @@ describe('string-includes', () => {
           console.log('found');
         }
       `;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
 
     it('should not detect plain indexOf calls', () => {
       const source = `
         const index = str.indexOf('test');
       `;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
   });
 });

@@ -136,42 +136,42 @@ describe('nullish-coalescing', () => {
       const source = `
         const result = value !== null && value !== undefined ? value : defaultValue;
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect ternary with === null || === undefined', () => {
       const source = `
         const result = value === null || value === undefined ? defaultValue : value;
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect loose equality ternary', () => {
       const source = `
         const result = value != null ? value : defaultValue;
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should detect if statement with nullish assignment', () => {
       const source = `
         if (x === null || x === undefined) { x = 5 }
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should not detect when already using nullish coalescing', () => {
       const source = `
         const result = value ?? defaultValue;
       `;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
 
     it('should not detect other patterns', () => {
       const source = `
         const result = value !== null ? value : defaultValue;
       `;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
   });
 });

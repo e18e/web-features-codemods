@@ -1,6 +1,6 @@
 import {parse, Lang, type Edit, type NapiConfig} from '@ast-grep/napi';
-import type {Options, CodeMod} from '../shared.js';
-import {getNodesSourceText} from '../typescript-utils.js';
+import type {Options, CodeMod, TestResult} from '../shared.js';
+import {getNodesSourceText, getRangeForNode} from '../typescript-utils.js';
 
 const arrayClonePatterns = [
   {pattern: 'const $NAME = $ARRAY.concat();'},
@@ -42,7 +42,7 @@ const createSpliceStatementRule = (name: string): NapiConfig => ({
 });
 
 export const codemod: CodeMod = {
-  test(options: Options): boolean {
+  test(options: Options): TestResult {
     const ast = parse(Lang.TypeScript, options.source);
     const root = ast.root();
 
@@ -53,11 +53,11 @@ export const codemod: CodeMod = {
       const arraySplice = node.getMatch('ARRSPLICE');
 
       if (name && arraySplice && name.text() === arraySplice.text()) {
-        return true;
+        return {hasMatch: true, range: getRangeForNode(node)};
       }
     }
 
-    return false;
+    return {hasMatch: false};
   },
   apply(options: Options): string {
     const ast = parse(Lang.TypeScript, options.source);

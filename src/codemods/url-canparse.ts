@@ -1,6 +1,6 @@
 import {parse, Lang, type Edit, type NapiConfig} from '@ast-grep/napi';
-import type {Options, CodeMod} from '../shared.js';
-import {getNodesSourceText} from '../typescript-utils.js';
+import type {Options, CodeMod, TestResult} from '../shared.js';
+import {getNodesSourceText, getRangeForNode} from '../typescript-utils.js';
 
 // Pattern: try { new URL(u); return true; } catch { return false; }
 const simpleBooleanReturnPattern: NapiConfig = {
@@ -27,11 +27,15 @@ const tryWithBodyPattern: NapiConfig = {
 };
 
 export const codemod: CodeMod = {
-  test(options: Options): boolean {
+  test(options: Options): TestResult {
     const ast = parse(Lang.TypeScript, options.source);
     const root = ast.root();
 
-    return root.has(simpleBooleanReturnPattern) || root.has(tryWithBodyPattern);
+    const node =
+      root.find(simpleBooleanReturnPattern) ?? root.find(tryWithBodyPattern);
+    return node
+      ? {hasMatch: true, range: getRangeForNode(node)}
+      : {hasMatch: false};
   },
   apply(options: Options): string {
     const ast = parse(Lang.TypeScript, options.source);

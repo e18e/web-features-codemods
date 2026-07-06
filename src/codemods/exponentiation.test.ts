@@ -44,14 +44,14 @@ describe('exponentiation', () => {
       const source = `
         const result = Math.pow(2, 3);
       `;
-      expect(codemod.test({source})).toBe(true);
+      expect(codemod.test({source}).hasMatch).toBe(true);
     });
 
     it('should not detect when there is no Math.pow', () => {
       const source = `
         const result = x ** y;
       `;
-      expect(codemod.test({source})).toBe(false);
+      expect(codemod.test({source}).hasMatch).toBe(false);
     });
   });
 });
