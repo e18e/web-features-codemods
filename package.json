@@ -30,10 +30,10 @@
     "@ast-grep/napi": "^0.45.2"
   },
   "devDependencies": {
-    "@types/node": "^26.4.0",
+    "@types/node": "^26.4.1",
     "@typescript/native-preview": "^7.0.0-dev.20260707.2",
-    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/coverage-v8": "^5.0.0",
     "prettier": "^3.9.6",
-    "vitest": "^4.0.13"
+    "vitest": "^5.0.0"
   }
 }
